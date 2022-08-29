@@ -13,12 +13,12 @@ public class OpenAPIConfiguration {
     public OpenAPI openAPI () {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Team Singapore")
-                        .description("Flight anomaly detection")
+                        .title("Servis studentske sluzbe")
+                        .description("Prijava predmeta i prijava ispita")
                         .version("v1.0")
                         .contact(
                                 new Contact()
-                                        .name("Comtrade360")
+                                        .name("Fakultet Organizacionih nauka")
                         ));
     }
 }
