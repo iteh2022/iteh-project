@@ -27,7 +27,7 @@ public class PrijavaIspitaController {
         return ResponseEntity.ok(prijavaIspita);
     }
 
-    @PutMapping("update")
+    @PutMapping("/update")
     public ResponseEntity<?> update(@RequestParam(value = "ocena") Integer ocena,
                                     @RequestParam(value = "student") String brojIndeksa,
                                     @RequestParam(value = "predmet") String nazivPredmeta) {

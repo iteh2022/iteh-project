@@ -2,6 +2,7 @@ package com.iteh.project.loader;
 
 import com.iteh.project.domain.entity.*;
 import com.iteh.project.domain.repository.*;
+import com.iteh.project.infrastructure.exceptions.custom.NotFound;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -61,7 +62,7 @@ public class DataLoader implements CommandLineRunner {
         prijavaIspita = prijavaIspitaRepo.save(prijavaIspita);
         System.out.println(prijavaIspita);
 
-        Student studentToUpdate = studentRepo.findByBrojIndeksa(student1.getBrojIndeksa());
+        Student studentToUpdate = studentRepo.findByBrojIndeksa(student1.getBrojIndeksa()).orElseThrow(() -> new NotFound(""));
 
 
 

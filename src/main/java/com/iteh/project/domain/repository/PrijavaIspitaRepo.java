@@ -4,9 +4,10 @@ import com.iteh.project.domain.entity.PrijavaIspita;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PrijavaIspitaRepo extends JpaRepository<PrijavaIspita, Long> {
-    PrijavaIspita findByStudentIdAndPredmetId(Long id, Long id1);
+    Optional<PrijavaIspita> findByStudentIdAndPredmetId(Long id, Long id1);
 
     List<PrijavaIspita> findAllByPredmetId(Long id);
 
