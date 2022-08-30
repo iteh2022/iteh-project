@@ -9,6 +9,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Set;
+
 @Component
 @Slf4j
 public class DataLoader implements CommandLineRunner {
@@ -23,6 +26,9 @@ public class DataLoader implements CommandLineRunner {
     private UserRepo userRepo;
     @Autowired
     private StudentRepo studentRepo;
+
+    @Autowired
+    private RoleRepo roleRepo;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
@@ -31,7 +37,25 @@ public class DataLoader implements CommandLineRunner {
         user.setUsername("20170418");
         String password = bCryptPasswordEncoder.encode("tajnasifra");
         user.setPassword(password);
+
+        Role role = new Role();
+        role.setName("STUDENT");
+        role = roleRepo.save(role);
+
+        user.setRoles(Set.of(role));
         userRepo.save(user);
+
+        User user1 = new User();
+        user1.setUsername("profa");
+        String password1 = bCryptPasswordEncoder.encode("tajnasifraa");
+        user1.setPassword(password1);
+
+        Role role1 = new Role();
+        role1.setName("PROFA");
+        role1 = roleRepo.save(role1);
+
+        user1.setRoles(Set.of(role1));
+        userRepo.save(user1);
 
 
         Predmet predmet1 = new Predmet();
@@ -60,7 +84,8 @@ public class DataLoader implements CommandLineRunner {
         prijavaIspita.setPredmet(predmet1);
         prijavaIspita.setStudent(student1);
         prijavaIspita = prijavaIspitaRepo.save(prijavaIspita);
-        System.out.println(prijavaIspita);
+        List<PrijavaIspita> prijavaIspitaList = prijavaIspitaRepo.findAllByStudentId(student1.getId());
+        System.out.println(prijavaIspitaList);
 
         Student studentToUpdate = studentRepo.findByBrojIndeksa(student1.getBrojIndeksa()).orElseThrow(() -> new NotFound(""));
 
@@ -70,16 +95,11 @@ public class DataLoader implements CommandLineRunner {
         prijavaPredmeta.setPredmet(predmet1);
         prijavaPredmeta.setStudent(studentToUpdate);
         prijavaPredmetaRepo.save(prijavaPredmeta);
-        studentToUpdate.getPrijavaPredmeta().add(prijavaPredmeta);
-        studentRepo.save(studentToUpdate);
+        System.out.println(studentToUpdate.getId());
         prijavaPredmeta = prijavaPredmetaRepo.findByStudentId(studentToUpdate.getId());
         System.out.println(prijavaPredmeta);
-        System.out.println("student to update = " + studentToUpdate);
 
-        System.out.println(studentToUpdate.getPrijavaIspita());
-        studentToUpdate.getPrijavaPredmeta().add(prijavaPredmeta);
-        studentRepo.save(studentToUpdate);
-        System.out.println(studentToUpdate);
+
 
     }
 }

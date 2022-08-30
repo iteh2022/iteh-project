@@ -2,6 +2,7 @@ package com.iteh.project.domain.entity;
 
 import lombok.*;
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Getter
@@ -17,11 +18,14 @@ public class User  {
     private Long id;
     private String username;
     private String password;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
 
     public static class Builder {
         private String email;
         private String password;
+        private Set<Role> roles;
 
         public Builder() {
         }
@@ -39,7 +43,9 @@ public class User  {
             return new User(
                     null,
                     email,
-                    password
+                    password,
+                    roles
+
             );
         }
     }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -18,13 +19,13 @@ public class PrijavaIspita {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime dateTime;
+    private LocalDate date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "predmet_id")
     private Predmet predmet;
 
@@ -33,14 +34,14 @@ public class PrijavaIspita {
 
     @PrePersist
     private void prePersist() {
-        this.dateTime = LocalDateTime.now();
+        this.date = LocalDate.now();
     }
 
     @Override
     public String toString() {
         return "PrijavaIspita{" +
                 "id=" + id +
-                ", dateTime=" + dateTime +
+                ", date=" + date.toString() +
                 ", student=" + student.getBrojIndeksa() +
                 ", predmet=" + predmet.getNaziv() +
                 '}';

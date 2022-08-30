@@ -25,10 +25,10 @@ public class Student {
     private String brojIndeksa;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "student")
     private Set<PrijavaPredmeta> prijavaPredmeta;
     @JsonIgnore
-    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "student")
     private Set<PrijavaIspita> prijavaIspita;
 
     @Override

@@ -31,7 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/register","/user**","/actuator/**").permitAll()
+                .antMatchers("/user**","/actuator/**").permitAll()
+                .antMatchers("/api/prijava-ispita/update").hasAuthority("PROFA")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
