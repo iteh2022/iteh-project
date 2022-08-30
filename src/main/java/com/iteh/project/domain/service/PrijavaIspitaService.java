@@ -2,6 +2,7 @@ package com.iteh.project.domain.service;
 
 import com.iteh.project.domain.entity.Predmet;
 import com.iteh.project.domain.entity.PrijavaIspita;
+import com.iteh.project.domain.entity.Profesor;
 import com.iteh.project.domain.entity.Student;
 import com.iteh.project.domain.repository.PrijavaIspitaRepo;
 import com.iteh.project.infrastructure.exceptions.custom.NotFound;
@@ -9,8 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -39,10 +40,11 @@ public class PrijavaIspitaService {
 
     }
 
-    public PrijavaIspita update(Integer ocena, String brojIndeksa, String nazivPredmeta) {
+    public PrijavaIspita update(Integer ocena, String brojIndeksa, String nazivPredmeta, String date) {
+        LocalDate date1 = LocalDate.parse(date);
         Predmet predmet1 = predmetService.findByName(nazivPredmeta);
         Student student = studentService.findByBrojIndeksa(brojIndeksa);
-        PrijavaIspita prijavaIspita = prijavaIspitaRepo.findByStudentIdAndPredmetId(student.getId(),predmet1.getId())
+        PrijavaIspita prijavaIspita = prijavaIspitaRepo.findByStudentIdAndPredmetIdAndDate(student.getId(),predmet1.getId(),date1)
                 .orElseThrow(() -> new NotFound(
                         "Prijava ispita studenta " + brojIndeksa + " iz predmeta " + nazivPredmeta + " ne postoji"
                         )
@@ -56,29 +58,37 @@ public class PrijavaIspitaService {
         return prijavaIspitaRepo.findById(id).orElseThrow();
     }
 
-    public List<PrijavaIspita> findAll(String brIndeksa, String predmet) {
-
+    public List<PrijavaIspita> findAll(String brIndeksa, String predmet, Profesor profesor) {
+        Set<Predmet> predmeti = profesor.getPredmeti();
+        List<PrijavaIspita> prijaveIspita = new ArrayList<>();
         if (brIndeksa == null && predmet == null) {
-            return prijavaIspitaRepo.findAll();
+            predmeti.forEach(predmet1 -> {
+                prijaveIspita.addAll(prijavaIspitaRepo.findAllByPredmetId(predmet1.getId()));
+            });
+            return prijaveIspita;
         }
 
         if (brIndeksa == null && predmet != null) {
             Predmet predmet1 = predmetService.findByName(predmet);
+            if(!predmeti.contains(predmet1)) {
+                throw new NotFound("Uneti predmet nije na listi predmeta sa vase katedre!");
+            }
             return prijavaIspitaRepo.findAllByPredmetId(predmet1.getId());
         }
 
         if (brIndeksa != null && predmet == null) {
             Student student = studentService.findByBrojIndeksa(brIndeksa);
-            return prijavaIspitaRepo.findAllByStudentId(student.getId());
+            predmeti.forEach(predmet1 -> {
+                prijaveIspita.addAll
+                        (prijavaIspitaRepo.findAllByStudentIdAndPredmetId(student.getId(), predmet1.getId()));
+            });
+            return prijaveIspita;
         }
 
         Student student = studentService.findByBrojIndeksa(brIndeksa);
         Predmet predmet1 = predmetService.findByName(predmet);
-        return List.of(prijavaIspitaRepo.findByStudentIdAndPredmetId(student.getId(), predmet1.getId())
-                .orElseThrow(() -> new NotFound(
-                        "Prijava ispita studenta " + brIndeksa + " iz predmeta " + predmet + " ne postoji!"
-                        )
-                ));
+        prijaveIspita.addAll(prijavaIspitaRepo.findAllByStudentIdAndPredmetId(student.getId(), predmet1.getId()));
+        return prijaveIspita;
 
     }
 

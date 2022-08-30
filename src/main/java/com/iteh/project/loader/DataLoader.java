@@ -17,6 +17,9 @@ import java.util.Set;
 public class DataLoader implements CommandLineRunner {
     @Autowired
     private PredmetRepo predmetRepo;
+
+    @Autowired
+    private ProfesorRepo profesorRepo;
     @Autowired
     private PrijavaPredmetaRepo prijavaPredmetaRepo;
     @Autowired
@@ -72,6 +75,21 @@ public class DataLoader implements CommandLineRunner {
         predmet1 = predmetRepo.save(predmet1);
         System.out.println("predmet 1 " + predmet1);
 
+        Predmet predmet2 = new Predmet();
+        predmet2.setNaziv("Matematika2");
+        predmet2 = predmetRepo.save(predmet2);
+        Profesor profa = new Profesor();
+        profa.setEmail("profa");
+        profa.setIme("Nikola");
+        profa.setPrezime("Rusimovic");
+        profa.setPredmeti(Set.of(predmet1,predmet2));
+        profa = profesorRepo.save(profa);
+
+        Predmet predmet3 = new Predmet();
+        predmet3.setNaziv("Matematika3");
+        predmet3 = predmetRepo.save(predmet3);
+
+
 
         student1.setAdresa(adresa);
         student1.setBrojIndeksa("20170418");
@@ -84,6 +102,16 @@ public class DataLoader implements CommandLineRunner {
         prijavaIspita.setPredmet(predmet1);
         prijavaIspita.setStudent(student1);
         prijavaIspita = prijavaIspitaRepo.save(prijavaIspita);
+
+        PrijavaIspita prijavaIspita1 = new PrijavaIspita();
+        prijavaIspita1.setStudent(student1);
+        prijavaIspita1.setPredmet(predmet2);
+        prijavaIspitaRepo.save(prijavaIspita1);
+
+        PrijavaIspita prijavaIspita2 = new PrijavaIspita();
+        prijavaIspita2.setStudent(student1);
+        prijavaIspita2.setPredmet(predmet3);
+        prijavaIspitaRepo.save(prijavaIspita2);
         List<PrijavaIspita> prijavaIspitaList = prijavaIspitaRepo.findAllByStudentId(student1.getId());
         System.out.println(prijavaIspitaList);
 
