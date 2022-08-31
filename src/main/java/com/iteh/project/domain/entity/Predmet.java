@@ -13,6 +13,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "premeti")
 public class Predmet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

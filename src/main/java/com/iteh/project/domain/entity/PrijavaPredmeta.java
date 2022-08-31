@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "prijave_predmeta")
+
 public class PrijavaPredmeta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
