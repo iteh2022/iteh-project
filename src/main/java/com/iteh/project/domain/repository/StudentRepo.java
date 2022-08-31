@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface StudentRepo extends JpaRepository<Student,Long> {
     Optional<Student> findByBrojIndeksa(String brojIndeksa);
+
+    boolean existsByBrojIndeksa(String brojIndeksa);
 }

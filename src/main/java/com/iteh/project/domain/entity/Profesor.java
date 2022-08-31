@@ -10,6 +10,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "profesori")
 public class Profesor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -15,4 +15,15 @@ public class StudentService {
         return studentRepo.findByBrojIndeksa(brIndeksa).orElseThrow(
                 () -> new NotFound("Student sa indeksom " + brIndeksa + " ne postoji!"));
     }
+
+    public Student create(Student student) {
+
+        if(studentRepo.existsByBrojIndeksa(student.getBrojIndeksa())){
+            throw new NotFound("Student sa tim brojem indeksa vec postoji!");
+        }
+
+        return studentRepo.save(student);
+
+
+    }
 }
