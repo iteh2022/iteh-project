@@ -14,4 +14,10 @@ public class PredmetService {
     public Predmet findByName(String name) {
         return predmetRepo.findByNaziv(name);
     }
+
+    public Predmet create(Predmet predmet) {
+
+        return predmetRepo.save(predmet);
+
+    }
 }
