@@ -4,6 +4,8 @@ import com.iteh.project.domain.entity.Predmet;
 import com.iteh.project.domain.entity.PrijavaIspita;
 import com.iteh.project.domain.entity.Profesor;
 import com.iteh.project.domain.entity.Student;
+import com.iteh.project.domain.models.PrijavaIspitaCreate;
+import com.iteh.project.domain.models.PrijavaIspitaUpdate;
 import com.iteh.project.domain.repository.PrijavaIspitaRepo;
 import com.iteh.project.infrastructure.exceptions.custom.NotFound;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +29,8 @@ public class PrijavaIspitaService {
     private PrijavaIspitaRepo prijavaIspitaRepo;
 
 
-    public PrijavaIspita create(String predmet, Student student) {
-        Predmet predmet1 = predmetService.findByName(predmet);
+    public PrijavaIspita create(PrijavaIspitaCreate predmet, Student student) {
+        Predmet predmet1 = predmetService.findByName(predmet.getPredmet());
 
         log.info(student.toString());
         PrijavaIspita prijavaIspita = new PrijavaIspita();
@@ -40,13 +42,14 @@ public class PrijavaIspitaService {
 
     }
 
-    public PrijavaIspita update(Integer ocena, String brojIndeksa, String nazivPredmeta, String date) {
-        LocalDate date1 = LocalDate.parse(date);
-        Predmet predmet1 = predmetService.findByName(nazivPredmeta);
-        Student student = studentService.findByBrojIndeksa(brojIndeksa);
+    public PrijavaIspita update(PrijavaIspitaUpdate model) {
+        Integer ocena = model.getOcena();
+        LocalDate date1 = LocalDate.parse(model.getDate());
+        Predmet predmet1 = predmetService.findByName(model.getNazivPredmeta());
+        Student student = studentService.findByBrojIndeksa(model.getBrIndeksa());
         PrijavaIspita prijavaIspita = prijavaIspitaRepo.findByStudentIdAndPredmetIdAndDate(student.getId(),predmet1.getId(),date1)
                 .orElseThrow(() -> new NotFound(
-                        "Prijava ispita studenta " + brojIndeksa + " iz predmeta " + nazivPredmeta + " ne postoji"
+                        "Prijava ispita studenta " + model.getBrIndeksa() + " iz predmeta " + model.getNazivPredmeta() + " ne postoji"
                         )
                 );
         prijavaIspita.setOcena(ocena);
@@ -92,4 +95,10 @@ public class PrijavaIspitaService {
 
     }
 
+    public void delete(Long id) {
+        if (!prijavaIspitaRepo.existsById(id)) {
+            throw new NotFound("Prijava ispita sa id = " + id + " ne postoji!");
+        }
+        prijavaIspitaRepo.deleteById(id);
+    }
 }

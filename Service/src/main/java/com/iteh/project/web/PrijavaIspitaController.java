@@ -1,17 +1,22 @@
 package com.iteh.project.web;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.iteh.project.domain.entity.PrijavaIspita;
 import com.iteh.project.domain.entity.Profesor;
 import com.iteh.project.domain.entity.Student;
+import com.iteh.project.domain.models.PrijavaIspitaCreate;
+import com.iteh.project.domain.models.PrijavaIspitaUpdate;
 import com.iteh.project.domain.service.PrijavaIspitaService;
 import com.iteh.project.domain.service.ProfesorService;
 import com.iteh.project.domain.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -27,19 +32,16 @@ public class PrijavaIspitaController {
     private ProfesorService profesorService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestParam String predmet, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<?> create(@RequestBody PrijavaIspitaCreate predmet, @AuthenticationPrincipal UserDetails userDetails) {
         Student student = studentService.findByBrojIndeksa(userDetails.getUsername());
         PrijavaIspita prijavaIspita = prijavaIspitaService.create(predmet, student);
         return ResponseEntity.ok(prijavaIspita);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestParam(value = "ocena") Integer ocena,
-                                    @RequestParam(value = "student") String brojIndeksa,
-                                    @RequestParam(value = "predmet") String nazivPredmeta,
-                                    @RequestParam(value = "date") String date) {
+    public ResponseEntity<?> update(@Valid @RequestBody PrijavaIspitaUpdate prijavaIspitaUpdate) {
 
-        PrijavaIspita prijavaIspita = prijavaIspitaService.update(ocena, brojIndeksa, nazivPredmeta, date);
+        PrijavaIspita prijavaIspita = prijavaIspitaService.update(prijavaIspitaUpdate);
         return ResponseEntity.ok(prijavaIspita);
     }
 
@@ -56,5 +58,11 @@ public class PrijavaIspitaController {
         Profesor profesor = profesorService.findProfesorByEmail(userDetails.getUsername());
         List<PrijavaIspita> prijaveIspita = prijavaIspitaService.findAll(brIndeksa, predmet, profesor);
         return ResponseEntity.ok(prijaveIspita);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        prijavaIspitaService.delete(id);
     }
 }

@@ -17,13 +17,9 @@ public class StudentService {
     }
 
     public Student create(Student student) {
-
-        if(studentRepo.existsByBrojIndeksa(student.getBrojIndeksa())){
+        if (studentRepo.existsByBrojIndeksa(student.getBrojIndeksa())) {
             throw new NotFound("Student sa tim brojem indeksa vec postoji!");
         }
-
         return studentRepo.save(student);
-
-
     }
 }
