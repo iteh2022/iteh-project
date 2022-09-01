@@ -13,19 +13,13 @@ public class PredmetController {
     @Autowired
     private PredmetService predmetService;
     @GetMapping
-    public ResponseEntity<?> findByName(@RequestParam(value = "predmet") String name){
-
+    public ResponseEntity<?> findByName(@RequestParam(value = "predmet") String name) {
         Predmet predmet = predmetService.findByName(name);
-
         return ResponseEntity.ok(predmet);
-
     }
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Predmet predmet){
-
         Predmet predmet1 = predmetService.create(predmet);
-
         return ResponseEntity.ok(predmet1);
-
     }
 }

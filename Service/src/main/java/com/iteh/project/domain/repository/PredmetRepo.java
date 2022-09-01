@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface PredmetRepo extends JpaRepository<Predmet, Long> {
-    Predmet findByNaziv(String naziv);
+    Optional<Predmet> findByNaziv(String naziv);
 }

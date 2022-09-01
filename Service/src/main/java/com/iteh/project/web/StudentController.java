@@ -10,26 +10,21 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/student")
 public class StudentController {
-
     private final StudentService studentService;
-
     @Autowired
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Student student){
+    public ResponseEntity<?> create(@RequestBody Student student) {
         Student student1 = studentService.create(student);
-
         return new ResponseEntity<>(student1, HttpStatus.CREATED);
-
     }
+
     @GetMapping
-    public ResponseEntity<?> findByBrojIndeksa(@RequestParam(value = "student") String brojIndeksa){
-
+    public ResponseEntity<?> findByBrojIndeksa(@RequestParam(value = "student") String brojIndeksa) {
         Student student = studentService.findByBrojIndeksa(brojIndeksa);
-
         return ResponseEntity.ok(student);
     }
 
