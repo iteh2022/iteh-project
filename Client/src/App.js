@@ -7,10 +7,14 @@ import Services from './components/pages/Services';
 import Login from './components/pages/Login';
 import Footer from './components/Footer';
 import PrijavaIspita from './components/pages/PrijavaIspita';
+import PrijavaPredmeta from './components/PrijavaPredmeta';
 
 function App() {
   return (
     <>
+    <div className='container'>
+    <PrijavaPredmeta />
+    </div>
     <Router>
       <Navbar />
       <Routes>
