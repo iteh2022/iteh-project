@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/prijava-predmeta")
+@CrossOrigin(origins = "http://localhost:5000/")
 public class PrijavaPredmetaController {
     @Autowired
     private PrijavaPredmetaService prijavaPredmetaService;

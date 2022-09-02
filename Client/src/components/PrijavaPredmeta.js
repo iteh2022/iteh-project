@@ -1,4 +1,5 @@
 import React from 'react'
+import user from '../components/pages/Login.js'
 
 class PrijavaPredmeta extends React.Component {
     constructor(props) {
@@ -9,7 +10,9 @@ class PrijavaPredmeta extends React.Component {
         }
     }
     componentDidMount() {
-        fetch("http://localhost:8080/api/prijava-predmeta")
+        fetch("http://localhost:8080/api/prijava-predmeta", {
+            headers: {authorization: 'Basic ' + window.btoa(user[0] + ":" + user[1])},
+        })
         .then(res => res.json())
         .then(
             (result) => {
@@ -25,7 +28,7 @@ class PrijavaPredmeta extends React.Component {
     render() {
         var predmetiLista = this.state.predmeti;
         debugger;
-        if(predmetiLista && predmetiLista.length > 0){
+        if(predmetiLista  && predmetiLista.length > 0){
             return(<div>
                 <h2>Prijavljeni predmeti</h2>
                 <table className='table'>
@@ -36,7 +39,7 @@ class PrijavaPredmeta extends React.Component {
                     </thead>
                     <tbody>
                         {predmetiLista.map(pr => (
-                            <tr key={pr.id}>
+                            <tr >
                                 <td>{pr.naziv}</td>
                             </tr>
                         ))}

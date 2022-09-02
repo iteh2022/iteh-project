@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import PrijavaIspita from './components/pages/PrijavaIspita';
 import PrijavaPredmeta from './components/PrijavaPredmeta';
 
+
 function App() {
   return (
     <>
@@ -27,7 +28,10 @@ function App() {
       </Router>
     </>
     
+    
   );
+  
 }
+
 
 export default App;
