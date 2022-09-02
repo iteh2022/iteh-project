@@ -9,7 +9,7 @@ function PrijavaIspita() {
     return (
         <>
         <div className='prijavaispita-container'>
-            <PrijavaPredmeta />
+            
             <form>
                 <ComboBoxComponent placeholder='Choose an exam' 
                 dataSource={['Internet tehnologije', 'Elektronsko poslovanje', 'Internet inteligentnih uredjaja', 'Internet marketing', 'Simulacija i simulacioni jezici']}>
