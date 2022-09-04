@@ -10,11 +10,10 @@ class PrijavaPredmeta extends React.Component {
         }
     }
     componentDidMount() {
-        fetch("http://localhost:8080/api/prijava-predmeta", {
-            headers: {authorization: 'Basic ' + window.btoa(user[0] + ":" + user[1])},
-        })
+        fetch("http://localhost:8080/api/prijava-predmeta")
         .then(res => res.json())
         .then(
+            console.log('ddd'),
             (result) => {
                 this.setState({
                     predmeti: result
@@ -27,7 +26,7 @@ class PrijavaPredmeta extends React.Component {
     }
     render() {
         var predmetiLista = this.state.predmeti;
-        debugger;
+        // debugger;
         if(predmetiLista  && predmetiLista.length > 0){
             return(<div>
                 <h2>Prijavljeni predmeti</h2>
