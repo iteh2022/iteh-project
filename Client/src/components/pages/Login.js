@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../App.css';
 import Button from '../Button';
 import'./Login.css';
@@ -13,26 +13,39 @@ function handleLogin(user){
 
 
 function Login () {
+  const [username, setUsername] = useState(null);
+const [password, setPassword] = useState(null)
+
+const handleSubmit= (e) => {
+  e.preventDefault();
+  user[0] =username;
+  user[1] =password;
+  alert(user);
+  
+}
+
     return (
     <>
     <div className='login-container'>
-        <form >
+    <form onSubmit={handleSubmit}>
             <input
               className='footer-input'
-              defaultValue={"20170418"}
+              // defaultValue={"20170418"}
               name='email'
               type='email'
               placeholder='Your Email'
+              onChange={(e) => setUsername(e.target.value)} 
             />
             <br />
             <input
               className='footer-input'
-              defaultValue={"tajnasifra"}
+              // defaultValue={"tajnasifra"}
               name='password'
               type='password'
               placeholder='Your Password'
+              onChange={(e) => setPassword(e.target.value)} 
             />
-             <Button path='/login' buttonStyle='btn--primary'>Login</Button> 
+             <Button path='/login' buttonStyle='btn--primary' type="submit" onClick={(e)=> handleSubmit(e)}>Login</Button> 
           </form>
     </div>
     </>
