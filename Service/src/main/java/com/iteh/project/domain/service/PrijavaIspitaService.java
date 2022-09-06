@@ -44,7 +44,7 @@ public class PrijavaIspitaService {
 
     public PrijavaIspita update(PrijavaIspitaUpdate model) {
         Integer ocena = model.getOcena();
-        LocalDate date1 = LocalDate.parse(model.getDate());
+        LocalDate date1 = LocalDate.parse(model.getDatum());
         Predmet predmet1 = predmetService.findByName(model.getNazivPredmeta());
         Student student = studentService.findByBrojIndeksa(model.getBrIndeksa());
         PrijavaIspita prijavaIspita = prijavaIspitaRepo.findByStudentIdAndPredmetIdAndDate(student.getId(),predmet1.getId(),date1)
