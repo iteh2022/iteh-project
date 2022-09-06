@@ -25,8 +25,10 @@ public class PrijavaPredmetaController {
     private StudentService studentService;
 
     @GetMapping
-    public ResponseEntity<?> findAllByStudentAndCurrentYear(@AuthenticationPrincipal UserDetails userDetails) {
-        Student student = studentService.findByBrojIndeksa(userDetails.getUsername());
+    public ResponseEntity<?> findAllByStudentAndCurrentYear() {
+        Student student = studentService.findByBrojIndeksa("20170418");
+//        Student student = new Student();
+//        student.setBrojIndeksa("20170418");
         List<Predmet> predmeti = prijavaPredmetaService.findAllByStudentAndCurrentYear(student);
         return ResponseEntity.ok(predmeti);
     }
