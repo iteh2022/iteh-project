@@ -21,5 +21,5 @@ public class PrijavaIspitaUpdate {
     @Min(5)
     @Max(10)
     private Integer ocena;
-    private String date;
+    private String datum;
 }

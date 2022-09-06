@@ -42,7 +42,7 @@ public class DataLoader implements CommandLineRunner {
         user.setPassword(password);
 
         Role role = new Role();
-        role.setName("STUDENT");
+        role.setName("ROLE_STUDENT");
         role = roleRepo.save(role);
 
         user.setRoles(Set.of(role));
@@ -54,7 +54,7 @@ public class DataLoader implements CommandLineRunner {
         user1.setPassword(password1);
 
         Role role1 = new Role();
-        role1.setName("PROFA");
+        role1.setName("ROLE_PROFA");
         role1 = roleRepo.save(role1);
 
         user1.setRoles(Set.of(role1));

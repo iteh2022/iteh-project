@@ -9,17 +9,19 @@ import com.iteh.project.domain.models.PrijavaIspitaUpdate;
 import com.iteh.project.domain.service.PrijavaIspitaService;
 import com.iteh.project.domain.service.ProfesorService;
 import com.iteh.project.domain.service.StudentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
+import java.security.Principal;
 import java.util.List;
-
+@Slf4j
 @RestController
 @RequestMapping("/api/prijava-ispita")
 public class PrijavaIspitaController {
@@ -32,8 +34,8 @@ public class PrijavaIspitaController {
     private ProfesorService profesorService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody PrijavaIspitaCreate predmet, @AuthenticationPrincipal UserDetails userDetails) {
-        Student student = studentService.findByBrojIndeksa(userDetails.getUsername());
+    public ResponseEntity<?> create(@RequestBody PrijavaIspitaCreate predmet, Principal principal) {
+        Student student = studentService.findByBrojIndeksa(principal.getName());
         PrijavaIspita prijavaIspita = prijavaIspitaService.create(predmet, student);
         return ResponseEntity.ok(prijavaIspita);
     }
@@ -54,8 +56,9 @@ public class PrijavaIspitaController {
     @GetMapping
     public ResponseEntity<List<PrijavaIspita>> findAll(@RequestParam(value = "student", required = false) String brIndeksa,
                                                        @RequestParam(value = "predmet", required = false) String predmet,
-                                                       @AuthenticationPrincipal UserDetails userDetails) {
-        Profesor profesor = profesorService.findProfesorByEmail(userDetails.getUsername());
+                                                       Principal principal
+                                                       ) {
+        Profesor profesor = profesorService.findProfesorByEmail(principal.getName());
         List<PrijavaIspita> prijaveIspita = prijavaIspitaService.findAll(brIndeksa, predmet, profesor);
         return ResponseEntity.ok(prijaveIspita);
     }

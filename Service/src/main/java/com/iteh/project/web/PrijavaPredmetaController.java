@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -25,16 +26,16 @@ public class PrijavaPredmetaController {
     private StudentService studentService;
 
     @GetMapping
-    public ResponseEntity<?> findAllByStudentAndCurrentYear(@AuthenticationPrincipal UserDetails userDetails) {
-        Student student = studentService.findByBrojIndeksa(userDetails.getUsername());
+    public ResponseEntity<?> findAllByStudentAndCurrentYear(Principal principal) {
+        Student student = studentService.findByBrojIndeksa(principal.getName());
         List<Predmet> predmeti = prijavaPredmetaService.findAllByStudentAndCurrentYear(student);
         return ResponseEntity.ok(predmeti);
     }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody PrijavaIspitaCreate predmet,
-                                    @AuthenticationPrincipal UserDetails userDetails) {
-        Student student = studentService.findByBrojIndeksa(userDetails.getUsername());
+                                    Principal principal) {
+        Student student = studentService.findByBrojIndeksa(principal.getName());
         PrijavaPredmeta prijavaPredmeta1 = prijavaPredmetaService.create(predmet,student);
         return ResponseEntity.ok(prijavaPredmeta1);
     }

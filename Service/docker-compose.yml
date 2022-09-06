@@ -41,6 +41,7 @@
       command: '--config.file=/etc/prometheus/config.yml'
       volumes:
         - './prometheus.yml:/etc/prometheus/config.yml'
+
     grafana:
       image: 'grafana/grafana:8.2.7'
       ports:
