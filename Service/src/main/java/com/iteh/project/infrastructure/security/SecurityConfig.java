@@ -41,8 +41,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http
+                .headers().frameOptions().disable();
+        http
                 .authorizeRequests()
-                .antMatchers("/api/login/**","/actuator/**").permitAll()
+                .antMatchers("/api/login/**","/actuator/**","/h2-console/**").permitAll()
                 .antMatchers("/api/prijava-ispita/update").hasAuthority("ROLE_PROFA")
                 .antMatchers(GET, "/api/prijava-ispita/**").hasAuthority("ROLE_PROFA")
                 .antMatchers(POST, "/api/prijava-ispita").hasAuthority("ROLE_STUDENT")

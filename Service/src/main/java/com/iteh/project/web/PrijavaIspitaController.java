@@ -39,7 +39,6 @@ public class PrijavaIspitaController {
 
     @PutMapping("/update")
     public ResponseEntity<?> update(@Valid @RequestBody PrijavaIspitaUpdate prijavaIspitaUpdate) {
-
         PrijavaIspita prijavaIspita = prijavaIspitaService.update(prijavaIspitaUpdate);
         return ResponseEntity.ok(prijavaIspita);
     }
@@ -53,8 +52,7 @@ public class PrijavaIspitaController {
     @GetMapping
     public ResponseEntity<List<PrijavaIspita>> findAll(@RequestParam(value = "student", required = false) String brIndeksa,
                                                        @RequestParam(value = "predmet", required = false) String predmet,
-                                                       Principal principal
-                                                       ) {
+                                                       Principal principal) {
         Profesor profesor = profesorService.findProfesorByEmail(principal.getName());
         List<PrijavaIspita> prijaveIspita = prijavaIspitaService.findAll(brIndeksa, predmet, profesor);
         return ResponseEntity.ok(prijaveIspita);
