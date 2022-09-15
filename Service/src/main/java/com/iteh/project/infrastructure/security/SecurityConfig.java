@@ -46,10 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/login/**","/actuator/**","/h2-console/**","/swagger-ui/**","/v3/api-docs/**").permitAll()
                 .antMatchers("/api/prijava-ispita/update").hasAuthority("ROLE_PROFA")
-                .antMatchers(GET, "/api/prijava-ispita/**").hasAuthority("ROLE_PROFA")
+                .antMatchers(GET, "/api/prijava-ispita").hasAuthority("ROLE_PROFA")
+                .antMatchers(GET, "/api/prijava-ispita/student").hasAuthority("ROLE_STUDENT")
                 .antMatchers(POST, "/api/prijava-ispita").hasAuthority("ROLE_STUDENT")
                 .antMatchers(DELETE, "/api/prijava-ispita/**").hasAuthority("ROLE_STUDENT")
-                .antMatchers(POST, "/apii/prijava-predmeta/**").hasAuthority("ROLE_STUDENT")
+                .antMatchers(POST, "/api/prijava-predmeta/**").hasAuthority("ROLE_STUDENT")
                 .anyRequest().authenticated();
 
         http.addFilter(customAuthenticationFilter);

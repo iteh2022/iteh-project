@@ -43,9 +43,10 @@ public class PrijavaIspitaController {
         return ResponseEntity.ok(prijavaIspita);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id) {
-        PrijavaIspita prijavaIspita = prijavaIspitaService.findById(id);
+    @GetMapping("/student")
+    public ResponseEntity<?> findAllByStudentId(Principal principal) {
+        Student student = studentService.findByBrojIndeksa(principal.getName());
+        List<PrijavaIspita> prijavaIspita = prijavaIspitaService.findAllByStudentId(student.getId());
         return ResponseEntity.ok(prijavaIspita);
     }
 

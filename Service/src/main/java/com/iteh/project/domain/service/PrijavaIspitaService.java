@@ -101,4 +101,8 @@ public class PrijavaIspitaService {
         }
         prijavaIspitaRepo.deleteById(id);
     }
+
+    public List<PrijavaIspita> findAllByStudentId(Long id) {
+        return prijavaIspitaRepo.findAllByStudentId(id);
+    }
 }
