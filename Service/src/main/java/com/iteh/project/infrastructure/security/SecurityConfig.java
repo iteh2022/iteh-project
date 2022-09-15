@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable();
         http
                 .authorizeRequests()
-                .antMatchers("/api/login/**","/actuator/**","/h2-console/**").permitAll()
+                .antMatchers("/api/login/**","/actuator/**","/h2-console/**","/swagger-ui/**","/v3/api-docs/**").permitAll()
                 .antMatchers("/api/prijava-ispita/update").hasAuthority("ROLE_PROFA")
                 .antMatchers(GET, "/api/prijava-ispita/**").hasAuthority("ROLE_PROFA")
                 .antMatchers(POST, "/api/prijava-ispita").hasAuthority("ROLE_STUDENT")
