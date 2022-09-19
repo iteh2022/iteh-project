@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface PrijavaPredmetaRepo extends JpaRepository<PrijavaPredmeta, Long> {
-    PrijavaPredmeta findByStudentId(Long id);
+    List<PrijavaPredmeta> findAllByStudentId(Long id);
 
     List<PrijavaPredmeta> findAllByStudentIdAndDateBetween(Long id, LocalDate datumPocetkaPrijave, LocalDate datumZavrsetkaPrijave);
 }

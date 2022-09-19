@@ -135,8 +135,7 @@ public class DataLoader implements CommandLineRunner {
         prijavaPredmetaRepo.save(prijavaPredmeta1);
         prijavaPredmetaRepo.save(prijavaPredmeta2);
         System.out.println(studentToUpdate.getId());
-        prijavaPredmeta = prijavaPredmetaRepo.findByStudentId(studentToUpdate.getId());
-        System.out.println(prijavaPredmeta);
+
 
 
 
