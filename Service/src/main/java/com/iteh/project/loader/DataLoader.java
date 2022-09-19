@@ -122,7 +122,18 @@ public class DataLoader implements CommandLineRunner {
         PrijavaPredmeta prijavaPredmeta = new PrijavaPredmeta();
         prijavaPredmeta.setPredmet(predmet1);
         prijavaPredmeta.setStudent(studentToUpdate);
+
+        PrijavaPredmeta prijavaPredmeta1 = new PrijavaPredmeta();
+        prijavaPredmeta1.setPredmet(predmet2);
+        prijavaPredmeta1.setStudent(studentToUpdate);
+
+        PrijavaPredmeta prijavaPredmeta2 = new PrijavaPredmeta();
+        prijavaPredmeta2.setPredmet(predmet3);
+        prijavaPredmeta2.setStudent(studentToUpdate);
+
         prijavaPredmetaRepo.save(prijavaPredmeta);
+        prijavaPredmetaRepo.save(prijavaPredmeta1);
+        prijavaPredmetaRepo.save(prijavaPredmeta2);
         System.out.println(studentToUpdate.getId());
         prijavaPredmeta = prijavaPredmetaRepo.findByStudentId(studentToUpdate.getId());
         System.out.println(prijavaPredmeta);

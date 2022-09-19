@@ -1,6 +1,7 @@
 package com.iteh.project.domain.repository;
 
 import com.iteh.project.domain.entity.PrijavaIspita;
+import com.iteh.project.domain.entity.PrijavaPredmeta;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
@@ -16,4 +17,6 @@ public interface PrijavaIspitaRepo extends JpaRepository<PrijavaIspita, Long> {
     List<PrijavaIspita> findAllByStudentId(Long id);
 
     Optional<PrijavaIspita> findByStudentIdAndPredmetIdAndDate(Long id, Long id1, LocalDate date);
+
+    List<PrijavaIspita> findAllByStudentIdAndPredmetIdAndDateBetween(Long id, Long id1, LocalDate datumPocetkaPrijave, LocalDate datumZavrsetkaPrijave);
 }

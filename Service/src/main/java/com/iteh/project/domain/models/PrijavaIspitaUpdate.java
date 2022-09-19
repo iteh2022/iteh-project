@@ -13,13 +13,10 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PrijavaIspitaUpdate {
-    @JsonProperty("student")
-    @Size(min = 8)
-    private String brIndeksa;
-    @JsonProperty("predmet")
-    private String nazivPredmeta;
+
+    private Long id;
     @Min(5)
     @Max(10)
     private Integer ocena;
-    private String datum;
+
 }

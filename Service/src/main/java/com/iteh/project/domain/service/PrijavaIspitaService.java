@@ -1,5 +1,6 @@
 package com.iteh.project.domain.service;
 
+import com.iteh.project.domain.constants.Constants;
 import com.iteh.project.domain.entity.Predmet;
 import com.iteh.project.domain.entity.PrijavaIspita;
 import com.iteh.project.domain.entity.Profesor;
@@ -31,7 +32,13 @@ public class PrijavaIspitaService {
 
     public PrijavaIspita create(PrijavaIspitaCreate predmet, Student student) {
         Predmet predmet1 = predmetService.findByName(predmet.getPredmet());
+        List<PrijavaIspita> prijave = prijavaIspitaRepo
+                .findAllByStudentIdAndPredmetIdAndDateBetween(
+                        student.getId(), predmet1.getId(), Constants.DATUM_POCETKA_PRIJAVE, Constants.DATUM_ZAVRSETKA_PRIJAVE);
 
+        if (prijave.size() > 0) {
+            throw new NotFound("Predmet je vec prijavljen");
+        }
         log.info(student.toString());
         PrijavaIspita prijavaIspita = new PrijavaIspita();
         prijavaIspita.setStudent(student);
@@ -42,7 +49,7 @@ public class PrijavaIspitaService {
 
     }
 
-    public PrijavaIspita update(PrijavaIspitaUpdate model) {
+   /* public PrijavaIspita update(PrijavaIspitaUpdate model) {
         Integer ocena = model.getOcena();
         LocalDate date1 = LocalDate.parse(model.getDatum());
         Predmet predmet1 = predmetService.findByName(model.getNazivPredmeta());
@@ -55,6 +62,15 @@ public class PrijavaIspitaService {
         prijavaIspita.setOcena(ocena);
         prijavaIspitaRepo.save(prijavaIspita);
         return prijavaIspita;
+    }*/
+
+    public PrijavaIspita update(PrijavaIspitaUpdate model) {
+        Integer ocena = model.getOcena();
+        Long id = model.getId();
+        PrijavaIspita prijavaIspita = prijavaIspitaRepo.findById(id)
+                .orElseThrow(() -> new NotFound("Ne postoji prijava ispita sa id = " + id));
+        prijavaIspita.setOcena(ocena);
+        return prijavaIspitaRepo.save(prijavaIspita);
     }
 
     public PrijavaIspita findById(Long id) {
