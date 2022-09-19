@@ -22,4 +22,9 @@ public class PredmetController {
         Predmet predmet1 = predmetService.create(predmet);
         return ResponseEntity.ok(predmet1);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok(predmetService.findAll());
+    }
 }

@@ -62,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/prijava-ispita/update").hasAuthority("ROLE_PROFA")
                 .antMatchers(GET, "/api/prijava-ispita").hasAuthority("ROLE_PROFA")
                 .antMatchers(GET, "/api/prijava-ispita/student").hasAuthority("ROLE_STUDENT")
+                .antMatchers(GET, "/api/predmet/all").hasAuthority("ROLE_STUDENT")
                 .antMatchers(POST, "/api/prijava-ispita").hasAuthority("ROLE_STUDENT")
                 .antMatchers(DELETE, "/api/prijava-ispita/**").hasAuthority("ROLE_STUDENT")
                 .antMatchers(POST, "/api/prijava-predmeta/**").hasAuthority("ROLE_STUDENT")
