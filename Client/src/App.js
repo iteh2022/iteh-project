@@ -11,7 +11,7 @@ import Footer from './components/Footer';
 import React, { useState } from 'react';
 import { isLoggedIn } from './Helpers';
 import PrijavaPredmeta from './components/PrijavaPredmeta';
-import UpisOcene from './components/UpisOcene';
+import PrijavljeniIspiti from './components/PrijavljeniIspiti';
 
 export const ApiContext = React.createContext();
 export const CurrentUserContext = React.createContext(null);
@@ -35,7 +35,7 @@ function App() {
                     <Route path='/services/prijavaispita' element= {<PrijavaIspita />} />
                     <Route path='/services/odjavaispita' element= {<OdjavaIspita />} />
                     <Route path='/services/prijavapredmeta' element= {<PrijavaPredmeta />} />
-                    <Route path="/services/ocene" element={<UpisOcene/>} />
+                    <Route path="/services/ocene" element={<PrijavljeniIspiti/>} />
                   </Routes>
               </BrowserRouter>
             </ApiContext.Provider>
