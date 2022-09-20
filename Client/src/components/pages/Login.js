@@ -1,28 +1,42 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react'
 import '../../App.css';
 import Button from '../Button';
 import'./Login.css';
-
-const user = ["", ""];
-
-function handleLogin(user){
-  user[0] = document.getElementsByName("email").defaultValue;
-  user[1] = document.getElementsByName("password").defaultValue;
-  alert(user);
-}
+import axios from "axios"
+import { ApiContext, CurrentUserContext } from '../../App'
+import { login } from '../../Helpers';
+import { useNavigate } from 'react-router-dom'
 
 
-function Login () {
-  const [username, setUsername] = useState(null);
-const [password, setPassword] = useState(null)
+const Login = () => {
+    let navigate = useNavigate();
 
-const handleSubmit= (e) => {
-  e.preventDefault();
-  user[0] =username;
-  user[1] =password;
-  alert(user);
-  
-}
+    const [userData, setUserData] = useState({username: "", password: "",});
+
+    const { setCurrentUser } = useContext(CurrentUserContext);
+    const { api } = useContext(ApiContext)
+
+    const qs = require('qs');
+
+    function handleInput(e){
+        let newUserData = userData;
+        newUserData[e.target.name] = e.target.value; 
+        console.log(newUserData);
+        setUserData(newUserData);
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+
+      axios.post("http://localhost:8080/login", qs.stringify(userData)).then(response => {
+          login(response.data.access_token);
+          setCurrentUser(response.data.access_token);
+          navigate("/");
+      }).catch((error) => {
+          console.log(error);
+          alert("Korisnicko ime ili lozinka nisu validni!")
+      });
+  }
 
     return (
     <>
@@ -30,28 +44,24 @@ const handleSubmit= (e) => {
     <form onSubmit={handleSubmit}>
             <input
               className='footer-input'
-              // defaultValue={"20170418"}
-              name='email'
-              type='email'
+              name='username'
+              type='username'
               placeholder='Your Email'
-              onChange={(e) => setUsername(e.target.value)} 
+              onInput={handleInput}
             />
             <br />
             <input
               className='footer-input'
-              // defaultValue={"tajnasifra"}
               name='password'
               type='password'
               placeholder='Your Password'
-              onChange={(e) => setPassword(e.target.value)} 
+              onInput={handleInput}
             />
-             <Button path='/login' buttonStyle='btn--primary' type="submit" onClick={(e)=> handleSubmit(e)}>Login</Button> 
+             <button className="btn btn-primary btn-lg" type="submit">Login</button> 
           </form>
     </div>
     </>
     )
 }
-
-export {user};
 
 export default Login;

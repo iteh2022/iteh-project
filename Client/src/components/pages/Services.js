@@ -11,7 +11,8 @@ function Services () {
             <div className='services-btns'>
             <Button className='btns' buttonStyle='btn--primary' buttonSize='btn--medium' path='/services/prijavaispita'>Prijava ispita</Button>
             <Button className='btns' buttonStyle='btn--primary' buttonSize='btn--medium' path='/services/odjavaispita'>Odjava ispita</Button>
-            <Button className='btns' buttonStyle='btn--primary' buttonSize='btn--medium' path='/services/zalbe'>Upis ocene</Button>
+            <Button className='btns' buttonStyle='btn--primary' buttonSize='btn--medium' path='/services/prijavapredmeta'>Prijava predmeta</Button>
+            <Button className='btns' buttonStyle='btn--primary' buttonSize='btn--medium' path='/services/ocene'>Upis ocene</Button>
             </div>
         </div>
         </>

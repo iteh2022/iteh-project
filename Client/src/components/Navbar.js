@@ -1,13 +1,19 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import { Link } from 'react-router-dom'
 import Button from './Button';
+import { ApiContext, CurrentUserContext } from '../App'
+import { logout } from '../Helpers'
 import './Navbar.css';
+import { useNavigate } from 'react-router-dom'
 
 function Navbar() {
+
+  let navigate = useNavigate();
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   const showButton = () => {
     if(window.innerWidth <= 960) {
@@ -16,6 +22,11 @@ function Navbar() {
         setButton(true);
       }
   };
+  function handleLogout() {
+    logout(); 
+    setCurrentUser(null); 
+    navigate('/'); 
+}
 
   useEffect(() => {
     showButton()
@@ -49,8 +60,14 @@ function Navbar() {
                       Login
                     </Link>
                   </li>
+                  <li className='nav-item'>
+                    <Link to ='/logout' className='nav-links-mobile' onClick={closeMobileMenu}>
+                      Logout
+                    </Link>
+                  </li>
                 </ul>
                 {button && <Button path='/login' buttonStyle='btn--outline'>LOGIN</Button>}
+                {button && <Button path='/login' buttonStyle='btn--outline' onClick={()=>handleLogout()}>LOGOUT</Button>}
             </div>
         </nav>
     </>
