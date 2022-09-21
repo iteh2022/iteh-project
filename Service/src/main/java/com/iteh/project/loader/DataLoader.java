@@ -60,7 +60,18 @@ public class DataLoader implements CommandLineRunner {
         user1.setRoles(Set.of(role1));
         userRepo.save(user1);
 
+        User user2 = new User();
+        user2.setUsername("20180418");
+        String password8 = bCryptPasswordEncoder.encode("tajnasifra");
+        user2.setPassword(password8);
+        user2.setRoles(Set.of(role));
+        userRepo.save(user2);
 
+
+        Student novi = new Student();
+        novi.setIme("Branko");
+        novi.setBrojIndeksa("20180418");
+        studentRepo.save(novi);
         Predmet predmet1 = new Predmet();
         Student student1 = new Student();
         PrijavaIspita prijavaIspita = new PrijavaIspita();
