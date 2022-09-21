@@ -37,6 +37,7 @@ function App() {
                     <Route path='/services/prijavapredmeta' element= {<PrijavaPredmeta />} />
                     <Route path="/services/ocene" element={<PrijavljeniIspiti/>} />
                   </Routes>
+                  <Footer />
               </BrowserRouter>
             </ApiContext.Provider>
         </CurrentUserContext.Provider>

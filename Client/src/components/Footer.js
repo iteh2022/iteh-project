@@ -13,23 +13,16 @@ function Footer() {
     <div className='footer-container'>
       <section className='footer-subscription'>
         <p className='footer-subscription-heading'>
-          Welcome students, we are here for you!
+          Dobro došli studenti, tu smo za vas!
         </p>
         <p className='footer-subscription-text'>
-          Let us know what you need.
+          Kontakt:<br></br>
+            <p className='footer-subscription-text'>
+              Email: studentskasluzba@gmail.com <br></br>
+              Telefon: + 01 234 567 88
+            </p>
         </p>
-        <div className='input-areas'>
-          <form>
-            <input
-              className='footer-input'
-              name='email'
-              type='email'
-              placeholder='Your Email'
-            />
-            <Button path='/login' buttonStyle='btn--primary' onClick={()=>alert("You need to be logged in!")}>Login</Button>
-          </form>
           {dateToYMD(new Date())}
-        </div>
       </section>
     </div>
   );
